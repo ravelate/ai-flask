@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+
+footer p, footer strong, footer b, footer {
+    color: #b0b0b0;
+}
+
+.footer-top {
+    background: #303030;
+    background-size: cover;
+    background-position: center;
+    padding: 0 0 20px;
+    font-family: rubik;
+  padding-top:30px;
+  
+}
+
+.footer-top, .footer-bottom {
+    background-color: #1c1f2f;
+}
+
+.footer-bottom {
+    padding: 15px 0;
+    border-top: 1px solid #313646;
+    background-color: #181828 !important;
+    color: #b0b0b0;
+    font-family: rubik;
+}
+
+.footer-bottom a:hover {
+    color: white;
+}
+
+
+footer p, footer li {
+    font-size: 15px;
+    line-height: 22px;
+}
+
+.footer-title {
+    margin-bottom: 40px;
+    color: #fff;
+    font-weight: 500;
+    text-transform: capitalize;
+    padding-bottom: 15px;
+    font-size: 16px;
+    position: relative;
+}
+
+.footer-title:after {
+    width: 50px;
+    background: #fff;
+    opacity: 0.2;
+    height: 1px;
+    content: "";
+    position: absolute;
+    bottom: 0;
+    left: 0;
+}
+
+footer p, footer li {
+    font-size: 15px;
+    line-height: 22px;
+}
+footer p {
+    line-height: 24px;
+    margin-bottom: 10px;
+    font-size: 15px;
+}
+
+
+
+#waterdrop {
+    height: 30px;
+}
+
+#waterdrop canvas {
+    bottom: -70px !important;
+}
+.rcorners3 {
+  border-radius: 25px;
+  background: white;
+  background-position: left top;
+  background-repeat: repeat;
+  margin: auto;
+  padding: 20px;
+  width: 80%;
+  height: 50%;
+  text-align: center;
+}
+
+
+    </style>
+     <link
+     href="https://unpkg.com/tailwindcss@^2/dist/tailwind.min.css"
+     rel="stylesheet"
+ />
+    <title>Document</title>
+</head>
+<body>
+        <div id="waterdrop"></div>
+        <footer>
+          <div class="footer-top">
+            <div class="rcorners3">
+                
+                    <h1 class="text-3xl text-bold">Pandan vs Jambu Biji</h1>
+    
+                    {% if uploaded_image %}
+                    <img
+                        src="{{ url_for('send_uploaded_image', filename=uploaded_image) }}"
+                        class="mt-8 mb-4 h-48 items-center border-8 border-gray-200 rounded-md"
+                    />
+                    {% else %}
+                    <div
+                        class="
+                            flex
+                            justify-center
+                            items-center
+                            my-8
+                            w-48
+                            h-48
+                            border-8 border-gray-200
+                            rounded-md
+                        "
+                    >
+                        <p class="text-center">
+                            Masukkan gambar daun
+                        </p>
+                    </div>
+                    {% endif %} {% if prediction %}
+                    <p class="mb-8">Hasil Prediksi: {{prediction}}</p>
+                    {% endif %}
+    
+                    <form
+                        method="post"
+                        enctype="multipart/form-data"
+                        class="flex flex-col"
+                    >
+                        <input
+                            type="file"
+                            name="image"
+                            class="
+                                mb-4
+                                p-4
+                                border-8 border-gray-200
+                                rounded-md
+                                bg-gray-100
+                            "
+                        />
+                        <button
+                            type="submit"
+                            class="p-4 bg-indigo-500 text-white rounded-md"
+                        >
+                            Prediksi Gambar
+                        </button>
+                    </form>
+
+            </div>
+          </div>
+        </footer>
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+      <script src="http://code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
+      <script src="https://daniellaharel.com/raindrops/js/raindrops.js"></script>
+    
+     <script> jQuery('#waterdrop').raindrops({color:'#1c1f2f', canvasHeight:150, density: 0.1, frequency: 20});
+    </script>
+</body>
+</html>
