@@ -7,25 +7,25 @@ import cv2
 
 app = Flask(__name__)
 app.config['UPLOAD_FOLDER'] = 'static/uploads/'
-# model = keras.models.load_model('myfile.h5')
+model = keras.models.load_model('lidahbuaya_pandan_class_model.h5')
 
-# class_dict = {0: 'Jambu Biji', 1: 'Pandan'}
+class_dict = {0: 'Lidah Buaya', 1: 'Pandan'}
 
-# def predict_label(img_path):
-#     query = cv2.imread(img_path)
-#     output = query.copy()
-#     query = cv2.resize(query, (32, 32))
-#     q = []
-#     q.append(query)
-#     q = np.array(q, dtype='float') / 255.0
-#     q_pred = model.predict(q)
-#     predicted_bit = q_pred * 10
-#     if(predicted_bit < 1):
-#         predicted_bit = 0
-#     if(predicted_bit>=1):
-#         predicted_bit = 1
-#     print(predicted_bit)
-#     return class_dict[predicted_bit]
+def predict_label(img_path):
+    query = cv2.imread(img_path)
+    output = query.copy()
+    query = cv2.resize(query, (150, 150))
+    q = []
+    q.append(query)
+    q = np.array(q, dtype='float') / 255.0
+    q_pred = model.predict(q)
+    predicted_bit = q_pred * 10
+    if(predicted_bit < 1):
+        predicted_bit = 0
+    if(predicted_bit>=1):
+        predicted_bit = 1
+    print(predicted_bit)
+    return class_dict[predicted_bit]
 
 @app.route('/', methods=['GET', 'POST'])
 def index():
@@ -34,8 +34,8 @@ def index():
                 image = request.files['image']
                 img_path = os.path.join(app.config['UPLOAD_FOLDER'], image.filename)
                 image.save(img_path)
-        #         prediction = predict_label(img_path)
-                return render_template('index.html', uploaded_image=image.filename)#, prediction=prediction)
+                prediction = predict_label(img_path)
+                return render_template('index.html', uploaded_image=image.filename, prediction=prediction)
 
     return render_template('index.html')
 
