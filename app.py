@@ -1,4 +1,4 @@
-from flask import Flask, render_template #, request, send_from_directory
+from flask import Flask, render_template, request, send_from_directory
 # from tensorflow.keras.models import load_model
 import keras
 import numpy as np
@@ -6,7 +6,7 @@ import os
 import cv2
 
 app = Flask(__name__)
-# app.config['UPLOAD_FOLDER'] = 'static/uploads/'
+app.config['UPLOAD_FOLDER'] = 'static/uploads/'
 # model = keras.models.load_model('myfile.h5')
 
 # class_dict = {0: 'Jambu Biji', 1: 'Pandan'}
@@ -29,19 +29,19 @@ app = Flask(__name__)
 
 @app.route('/', methods=['GET', 'POST'])
 def index():
-    # if request.method == 'POST':
-    #     if request.files:
-    #         image = request.files['image']
-    #         img_path = os.path.join(app.config['UPLOAD_FOLDER'], image.filename)
-    #         image.save(img_path)
-    #         prediction = predict_label(img_path)
-    #         return render_template('index.html', uploaded_image=image.filename, prediction=prediction)
+    if request.method == 'POST':
+        if request.files:
+                image = request.files['image']
+                img_path = os.path.join(app.config['UPLOAD_FOLDER'], image.filename)
+                image.save(img_path)
+        #         prediction = predict_label(img_path)
+                return render_template('index.html', uploaded_image=image.filename)#, prediction=prediction)
 
     return render_template('index.html')
 
-#@app.route('/display/<filename>')
-#def send_uploaded_image(filename=''):
- #   return send_from_directory(app.config['UPLOAD_FOLDER'], filename)
+@app.route('/display/<filename>')
+def send_uploaded_image(filename=''):
+   return send_from_directory(app.config['UPLOAD_FOLDER'], filename)
 
 if __name__ == '__main__':
     app.run(debug=True)
